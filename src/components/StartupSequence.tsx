@@ -102,7 +102,7 @@ export const StartupSequence: React.FC<StartupSequenceProps> = ({ onComplete }) 
           }}
           className="relative mb-6"
         >
-          <div className="relative w-16 h-16 bg-cyan-brand rounded-2xl flex items-center justify-center cursor-default p-2">
+          <div className="relative w-16 h-16 flex items-center justify-center">
             <img src={finpulseLogo} alt="FinPulse" className="w-full h-full object-contain" />
           </div>
         </motion.div>

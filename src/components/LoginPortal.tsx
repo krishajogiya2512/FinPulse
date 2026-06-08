@@ -9,7 +9,11 @@ interface ToastState {
   type: 'success' | 'error' | 'info';
 }
 
-export const LoginPortal: React.FC = () => {
+interface LoginPortalProps {
+  onLoginSuccess?: () => void;
+}
+
+export const LoginPortal: React.FC<LoginPortalProps> = ({ onLoginSuccess }) => {
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
   
   // Login/Signup form fields
@@ -89,6 +93,9 @@ export const LoginPortal: React.FC = () => {
       setTimeout(() => {
         setLoading(false);
         showToast('Successfully logged in! Launching dashboard...', 'success');
+        setTimeout(() => {
+          onLoginSuccess?.();
+        }, 900);
       }, 1800);
     } else {
       if (!name || !email || !password || !confirmPassword) {
@@ -227,7 +234,7 @@ export const LoginPortal: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="flex items-center gap-3 select-none"
         >
-          <div className="w-10 h-10 bg-cyan-brand rounded-xl flex items-center justify-center p-1">
+          <div className="w-10 h-10 flex items-center justify-center">
             <img src={finpulseLogo} alt="FinPulse" className="w-full h-full object-contain" />
           </div>
           <span className="font-extrabold text-xl tracking-wide text-white">FinPulse</span>
