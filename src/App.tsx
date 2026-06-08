@@ -6,19 +6,33 @@ import { LoginPortal } from './components/LoginPortal';
 import { Dashboard } from './components/Dashboard';
 import { SmartDeals } from './components/SmartDeals';
 import { PriceComparison } from './components/PriceComparison';
+import { SpendingSummary } from './components/SpendingSummary';
+import type { Transaction } from './types';
+
+/* ─── Seed data ─────────────────────────────────────────── */
+const INITIAL_TRANSACTIONS: Transaction[] = [
+  { id: 1, title: 'Grocery Shopping', category: 'Food',          amount: 450, date: '8 Jun' },
+  { id: 2, title: 'Uber Ride',        category: 'Transport',     amount: 120, date: '7 Jun' },
+  { id: 3, title: 'Netflix',          category: 'Entertainment', amount: 150, date: '5 Jun' },
+];
+
+type Screen = 'dashboard' | 'deals' | 'comparison' | 'spending-summary';
 
 const App: React.FC = () => {
-  const [startupComplete, setStartupComplete] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [currentScreen, setCurrentScreen] = useState<'dashboard' | 'deals' | 'comparison'>('dashboard');
+  const [startupComplete,  setStartupComplete]  = useState(false);
+  const [loggedIn,         setLoggedIn]          = useState(false);
+  const [currentScreen,    setCurrentScreen]     = useState<Screen>('dashboard');
+  const [transactions,     setTransactions]      = useState<Transaction[]>(INITIAL_TRANSACTIONS);
+  const [nextId,           setNextId]            = useState(INITIAL_TRANSACTIONS.length + 1);
 
   return (
     <div className="relative min-h-screen bg-navy-space text-slate-100 flex flex-col justify-start items-center overflow-x-hidden select-none">
-      
-      {/* Persistent Background blobs and particle canvas */}
+
+      {/* Persistent background blobs + particle canvas */}
       <BackgroundGlow />
 
       <AnimatePresence mode="wait">
+        {/* ── Startup sequence ───────────────────────────────── */}
         {!startupComplete ? (
           <motion.div
             key="startup"
@@ -30,6 +44,7 @@ const App: React.FC = () => {
             <StartupSequence onComplete={() => setStartupComplete(true)} />
           </motion.div>
 
+        /* ── Login ──────────────────────────────────────────── */
         ) : !loggedIn ? (
           <motion.div
             key="app-portal"
@@ -42,6 +57,7 @@ const App: React.FC = () => {
             <LoginPortal onLoginSuccess={() => setLoggedIn(true)} />
           </motion.div>
 
+        /* ── Dashboard ──────────────────────────────────────── */
         ) : currentScreen === 'dashboard' ? (
           <motion.div
             key="dashboard"
@@ -51,9 +67,17 @@ const App: React.FC = () => {
             transition={{ duration: 0.45, ease: 'easeOut' }}
             className="w-full min-h-screen z-10"
           >
-            <Dashboard onNavigateToDeals={() => setCurrentScreen('deals')} />
+            <Dashboard
+              transactions={transactions}
+              setTransactions={setTransactions}
+              nextId={nextId}
+              setNextId={setNextId}
+              onNavigateToDeals={() => setCurrentScreen('deals')}
+              onNavigateToSpendingSummary={() => setCurrentScreen('spending-summary')}
+            />
           </motion.div>
 
+        /* ── Smart Deals ────────────────────────────────────── */
         ) : currentScreen === 'deals' ? (
           <motion.div
             key="deals"
@@ -63,12 +87,14 @@ const App: React.FC = () => {
             transition={{ duration: 0.45, ease: 'easeOut' }}
             className="w-full min-h-screen z-10"
           >
-            <SmartDeals 
-              onNavigateToHome={() => setCurrentScreen('dashboard')} 
-              onNavigateToComparison={() => setCurrentScreen('comparison')} 
+            <SmartDeals
+              onNavigateToHome={() => setCurrentScreen('dashboard')}
+              onNavigateToComparison={() => setCurrentScreen('comparison')}
             />
           </motion.div>
-        ) : (
+
+        /* ── Price Comparison ───────────────────────────────── */
+        ) : currentScreen === 'comparison' ? (
           <motion.div
             key="comparison"
             initial={{ opacity: 0, y: 30 }}
@@ -77,9 +103,28 @@ const App: React.FC = () => {
             transition={{ duration: 0.45, ease: 'easeOut' }}
             className="w-full min-h-screen z-10"
           >
-            <PriceComparison 
-              onBack={() => setCurrentScreen('deals')} 
-              onNavigateToHome={() => setCurrentScreen('dashboard')} 
+            <PriceComparison
+              onBack={() => setCurrentScreen('deals')}
+              onNavigateToHome={() => setCurrentScreen('dashboard')}
+            />
+          </motion.div>
+
+        /* ── Spending Summary ───────────────────────────────── */
+        ) : (
+          <motion.div
+            key="spending-summary"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ duration: 0.45, ease: 'easeOut' }}
+            className="w-full min-h-screen z-10"
+          >
+            <SpendingSummary
+              transactions={transactions}
+              setTransactions={setTransactions}
+              onBack={() => setCurrentScreen('dashboard')}
+              onNavigateToHome={() => setCurrentScreen('dashboard')}
+              onNavigateToDeals={() => setCurrentScreen('deals')}
             />
           </motion.div>
         )}
@@ -90,4 +135,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-

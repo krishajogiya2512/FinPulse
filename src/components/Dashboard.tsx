@@ -12,15 +12,7 @@ import {
   X,
 } from 'lucide-react';
 import finpulseLogo from '../assets/finpulse_logo.png';
-
-/* ─── Types ─────────────────────────────────────────────── */
-interface Transaction {
-  id: number;
-  title: string;
-  category: string;
-  amount: number;
-  date: string;
-}
+import type { Transaction } from '../types';
 
 type NavTab = 'home' | 'deals' | 'settings';
 
@@ -32,13 +24,6 @@ const CATEGORY_COLORS: Record<string, string> = {
   Shopping:      '#f59e0b',
   Other:         '#6366f1',
 };
-
-/* ─── Static Data ────────────────────────────────────────── */
-const INITIAL_TRANSACTIONS: Transaction[] = [
-  { id: 1, title: 'Lunch at canteen', category: 'Food',          amount: 250, date: '10 Nov' },
-  { id: 2, title: 'Metro ride',       category: 'Transport',     amount: 50,  date: '10 Nov' },
-  { id: 3, title: 'Movie ticket',     category: 'Entertainment', amount: 120, date: '9 Nov'  },
-];
 
 const BUDGET_TOTAL = 5000;
 
@@ -105,15 +90,25 @@ function formatDateShort(iso: string) {
 
 interface DashboardProps {
   onNavigateToDeals?: () => void;
+  onNavigateToSpendingSummary?: () => void;
+  transactions: Transaction[];
+  setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
+  nextId: number;
+  setNextId: React.Dispatch<React.SetStateAction<number>>;
 }
 
 /* ─── Main Dashboard Component ───────────────────────────── */
-export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToDeals }) => {
+export const Dashboard: React.FC<DashboardProps> = ({
+  onNavigateToDeals,
+  onNavigateToSpendingSummary,
+  transactions,
+  setTransactions,
+  nextId,
+  setNextId,
+}) => {
   const [activeNav, setActiveNav]       = useState<NavTab>('home');
   const [editingId, setEditingId]       = useState<number | null>(null);
-  const [transactions, setTransactions] = useState<Transaction[]>(INITIAL_TRANSACTIONS);
   const [showModal, setShowModal]       = useState(false);
-  const [nextId, setNextId]             = useState(4);
 
   /* ── Form state ── */
   const [formAmount, setFormAmount]       = useState('');
@@ -385,7 +380,16 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToDeals }) => {
             className="rounded-2xl p-5"
             style={{ background: '#112233', border: '1px solid rgba(255,255,255,0.07)' }}
           >
-            <div className="text-sm font-semibold text-white mb-4">Spending Breakdown</div>
+            <div className="flex justify-between items-center mb-4">
+              <span className="text-sm font-semibold text-white">Spending Breakdown</span>
+              <button
+                id="btn-view-spending-summary"
+                onClick={onNavigateToSpendingSummary}
+                className="text-xs font-bold text-[#00c8c8] hover:text-cyan-300 transition-colors"
+              >
+                View All →
+              </button>
+            </div>
 
             <div className="flex items-center gap-5">
               {/* Donut chart */}
