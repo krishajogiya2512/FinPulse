@@ -103,8 +103,12 @@ function formatDateShort(iso: string) {
   return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 }
 
+interface DashboardProps {
+  onNavigateToDeals?: () => void;
+}
+
 /* ─── Main Dashboard Component ───────────────────────────── */
-export const Dashboard: React.FC = () => {
+export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToDeals }) => {
   const [activeNav, setActiveNav]       = useState<NavTab>('home');
   const [editingId, setEditingId]       = useState<number | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>(INITIAL_TRANSACTIONS);
@@ -245,7 +249,10 @@ export const Dashboard: React.FC = () => {
           {/* Deals */}
           <button
             id="nav-deals"
-            onClick={() => setActiveNav('deals')}
+            onClick={() => {
+              setActiveNav('deals');
+              onNavigateToDeals?.();
+            }}
             className="flex flex-col items-center gap-1 py-2.5 px-3 rounded-xl transition-all duration-200"
             style={{ color: activeNav === 'deals' ? '#00c8c8' : '#64748b' }}
           >
@@ -358,6 +365,7 @@ export const Dashboard: React.FC = () => {
             {/* View Deals */}
             <button
               id="btn-view-deals"
+              onClick={onNavigateToDeals}
               className="flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-sm transition-all duration-200 hover:scale-[1.02] active:scale-95"
               style={{
                 background: 'transparent',
@@ -524,6 +532,7 @@ export const Dashboard: React.FC = () => {
             {/* CTA */}
             <button
               id="btn-view-all-deals"
+              onClick={onNavigateToDeals}
               className="w-full py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-1.5 transition-all duration-200 hover:scale-[1.01] active:scale-95"
               style={{
                 background: 'transparent',
