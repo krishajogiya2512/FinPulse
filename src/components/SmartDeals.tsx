@@ -44,6 +44,14 @@ interface ShopOffer {
   url: string;
 }
 
+interface SmartDealsProps {
+  onNavigateToHome?: () => void;
+  onNavigateToComparison?: () => void;
+  onNavigateToSettings?: () => void;
+}
+
+
+
 /* ─── Static Product Data ────────────────────────────────── */
 const PRODUCTS: Product[] = [
   {
@@ -270,12 +278,9 @@ const PLATFORMS = [
   },
 ];
 
-interface SmartDealsProps {
-  onNavigateToHome?: () => void;
-  onNavigateToComparison?: () => void;
-}
 
-export const SmartDeals: React.FC<SmartDealsProps> = ({ onNavigateToHome, onNavigateToComparison }) => {
+
+export const SmartDeals: React.FC<SmartDealsProps> = ({ onNavigateToHome, onNavigateToComparison, onNavigateToSettings }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'All' | 'Food' | 'Stationery'>('All');
   const [sortOption, setSortOption] = useState<'Best Match' | 'Discount %' | 'Price: Low to High' | 'Price: High to Low' | 'Rating'>('Best Match');
@@ -398,6 +403,7 @@ export const SmartDeals: React.FC<SmartDealsProps> = ({ onNavigateToHome, onNavi
         {/* Bottom: Settings */}
         <button
           id="nav-settings"
+          onClick={() => onNavigateToSettings?.()}
           className="flex flex-col items-center gap-1 py-2.5 px-3 rounded-xl transition-all duration-200 text-[#64748b] hover:text-[#00c8c8]"
         >
           <Settings size={20} />

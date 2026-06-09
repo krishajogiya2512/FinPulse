@@ -7,6 +7,7 @@ import { Dashboard } from './components/Dashboard';
 import { SmartDeals } from './components/SmartDeals';
 import { PriceComparison } from './components/PriceComparison';
 import { SpendingSummary } from './components/SpendingSummary';
+import { Settings } from './components/Settings';
 import type { Transaction } from './types';
 
 /* ─── Seed data ─────────────────────────────────────────── */
@@ -16,7 +17,7 @@ const INITIAL_TRANSACTIONS: Transaction[] = [
   { id: 3, title: 'Netflix',          category: 'Entertainment', amount: 150, date: '5 Jun' },
 ];
 
-type Screen = 'dashboard' | 'deals' | 'comparison' | 'spending-summary';
+type Screen = 'dashboard' | 'deals' | 'comparison' | 'spending-summary' | 'settings';
 
 const App: React.FC = () => {
   const [startupComplete,  setStartupComplete]  = useState(false);
@@ -74,6 +75,7 @@ const App: React.FC = () => {
               setNextId={setNextId}
               onNavigateToDeals={() => setCurrentScreen('deals')}
               onNavigateToSpendingSummary={() => setCurrentScreen('spending-summary')}
+              onNavigateToSettings={() => setCurrentScreen('settings')}
             />
           </motion.div>
 
@@ -90,6 +92,7 @@ const App: React.FC = () => {
             <SmartDeals
               onNavigateToHome={() => setCurrentScreen('dashboard')}
               onNavigateToComparison={() => setCurrentScreen('comparison')}
+              onNavigateToSettings={() => setCurrentScreen('settings')}
             />
           </motion.div>
 
@@ -110,7 +113,7 @@ const App: React.FC = () => {
           </motion.div>
 
         /* ── Spending Summary ───────────────────────────────── */
-        ) : (
+        ) : currentScreen === 'spending-summary' ? (
           <motion.div
             key="spending-summary"
             initial={{ opacity: 0, y: 30 }}
@@ -125,9 +128,27 @@ const App: React.FC = () => {
               onBack={() => setCurrentScreen('dashboard')}
               onNavigateToHome={() => setCurrentScreen('dashboard')}
               onNavigateToDeals={() => setCurrentScreen('deals')}
+              onNavigateToSettings={() => setCurrentScreen('settings')}
             />
           </motion.div>
-        )}
+
+        /* ── Settings ──────────────────────────────────────── */
+        ) : currentScreen === 'settings' ? (
+          <motion.div
+            key="settings"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ duration: 0.45, ease: 'easeOut' }}
+            className="w-full min-h-screen z-10"
+          >
+            <Settings
+              onBack={() => setCurrentScreen('dashboard')}
+              onLogout={() => { setLoggedIn(false); setCurrentScreen('dashboard'); }}
+            />
+          </motion.div>
+
+        ) : null }
       </AnimatePresence>
 
     </div>

@@ -91,6 +91,7 @@ function formatDateShort(iso: string) {
 interface DashboardProps {
   onNavigateToDeals?: () => void;
   onNavigateToSpendingSummary?: () => void;
+  onNavigateToSettings?: () => void;
   transactions: Transaction[];
   setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
   nextId: number;
@@ -101,6 +102,7 @@ interface DashboardProps {
 export const Dashboard: React.FC<DashboardProps> = ({
   onNavigateToDeals,
   onNavigateToSpendingSummary,
+  onNavigateToSettings,
   transactions,
   setTransactions,
   nextId,
@@ -259,7 +261,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         {/* Bottom: Settings */}
         <button
           id="nav-settings"
-          onClick={() => setActiveNav('settings')}
+          onClick={() => { setActiveNav('settings'); onNavigateToSettings?.(); }}
           className="flex flex-col items-center gap-1 py-2.5 px-3 rounded-xl transition-all duration-200"
           style={{ color: activeNav === 'settings' ? '#00c8c8' : '#64748b' }}
         >

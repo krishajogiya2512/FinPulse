@@ -7,7 +7,6 @@ import {
   Plus,
   Tag,
   Settings,
-  TrendingDown,
   Bell,
 } from 'lucide-react';
 import finpulseLogo from '../assets/finpulse_logo.png';
@@ -17,6 +16,7 @@ interface SpendingSummaryProps {
   onBack?: () => void;
   onNavigateToHome?: () => void;
   onNavigateToDeals?: () => void;
+  onNavigateToSettings?: () => void;
   transactions: Transaction[];
   setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
 }
@@ -43,8 +43,8 @@ export const SpendingSummary: React.FC<SpendingSummaryProps> = ({
   onBack,
   onNavigateToHome,
   onNavigateToDeals,
+  onNavigateToSettings,
   transactions,
-  setTransactions,
 }) => {
   const [editingTxId, setEditingTxId] = useState<number | null>(null);
 
@@ -129,6 +129,7 @@ export const SpendingSummary: React.FC<SpendingSummaryProps> = ({
         {/* Settings */}
         <button
           id="nav-settings"
+          onClick={() => onNavigateToSettings?.()}
           className="flex flex-col items-center gap-1 py-2.5 px-3 rounded-xl transition-all duration-200 text-[#64748b] hover:text-[#00c8c8]"
         >
           <Settings size={20} />
