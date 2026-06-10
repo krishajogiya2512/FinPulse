@@ -197,7 +197,7 @@ export const Settings: React.FC<SettingsProps> = ({
   return (
     <div
       id="settings-root"
-      className="relative min-h-screen w-full flex flex-col items-center overflow-x-hidden"
+      className="relative min-h-screen w-full flex flex-col overflow-x-hidden"
       style={{ background: '#0d1f2d', fontFamily: "'Outfit', sans-serif" }}
     >
       {/* ── Left Sidebar ─────────────────────────────────────── */}
@@ -235,9 +235,9 @@ export const Settings: React.FC<SettingsProps> = ({
       </nav>
 
       {/* ── Main Content ─────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col" style={{ marginLeft: 72 }}>
+      <div className="flex-1 flex flex-col w-full" style={{ paddingLeft: 72 }}>
         {/* Header */}
-        <div className="flex items-center gap-3 p-4">
+        <div className="flex items-center gap-3 p-4 w-full max-w-md mx-auto">
           <div className="flex flex-col items-start">
             <h1 className="text-xl font-bold text-white">Settings</h1>
             <p className="text-sm text-gray-400">Customize your experience</p>
@@ -248,7 +248,7 @@ export const Settings: React.FC<SettingsProps> = ({
         {/* Profile Card */}
         <button
           onClick={handleProfileOpen}
-          className="flex items-center justify-between w-full max-w-4xl mx-auto rounded-xl p-4 mb-6 transition-all duration-200 hover:brightness-110"
+          className="flex items-center justify-between w-full max-w-md mx-auto rounded-xl p-4 mb-6 transition-all duration-200 hover:brightness-110"
           style={cardStyle}
         >
           <div className="flex items-center gap-3">
@@ -267,7 +267,7 @@ export const Settings: React.FC<SettingsProps> = ({
         </button>
 
         {/* ── Sections ───────────────────────────────────────── */}
-        <div className="w-full max-w-4xl mx-auto space-y-4 px-4 pb-12">
+        <div className="w-full max-w-md mx-auto space-y-4 px-4 pb-12">
           {/* ACCOUNT */}
           <div className="text-xs uppercase tracking-wider text-gray-500 mb-1">Account</div>
           <SettingRow
