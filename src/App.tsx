@@ -25,9 +25,13 @@ const App: React.FC = () => {
   const [currentScreen,    setCurrentScreen]     = useState<Screen>('dashboard');
   const [transactions,     setTransactions]      = useState<Transaction[]>(INITIAL_TRANSACTIONS);
   const [nextId,           setNextId]            = useState(INITIAL_TRANSACTIONS.length + 1);
+  const [isDarkMode,       setIsDarkMode]        = useState(true);
+
 
   return (
-    <div className="relative min-h-screen bg-navy-space text-slate-100 flex flex-col justify-start items-center overflow-x-hidden select-none">
+    <div
+      className={`relative min-h-screen bg-navy-space text-slate-100 flex flex-col justify-start items-center overflow-x-hidden select-none transition-colors duration-500${!isDarkMode ? ' light-mode' : ''}`}
+    >
 
       {/* Persistent background blobs + particle canvas */}
       <BackgroundGlow />
@@ -144,7 +148,9 @@ const App: React.FC = () => {
           >
             <Settings
               onBack={() => setCurrentScreen('dashboard')}
-              onLogout={() => { setLoggedIn(false); setCurrentScreen('dashboard'); }}
+              onLogout={() => { setLoggedIn(false); setCurrentScreen('dashboard'); setIsDarkMode(true); }}
+              isDarkMode={isDarkMode}
+              setIsDarkMode={setIsDarkMode}
             />
           </motion.div>
 

@@ -15,7 +15,6 @@ import {
   X,
   Compass,
 } from 'lucide-react';
-import finpulseLogo from '../assets/finpulse_logo.png';
 
 /* ─── Types ─────────────────────────────────────────────── */
 interface Product {
@@ -440,7 +439,6 @@ export const SmartDeals: React.FC<SmartDealsProps> = ({ onNavigateToHome, onNavi
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <img src={finpulseLogo} alt="FinPulse" className="w-7 h-7 object-contain" />
             <span className="text-sm font-extrabold text-white tracking-wide">
               FinPulse
             </span>

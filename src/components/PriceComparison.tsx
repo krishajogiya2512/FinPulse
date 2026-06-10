@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Check, ChevronRight, MapPin, Home, Plus, Tag, Settings } from 'lucide-react';
+import { Check, ChevronRight, MapPin, Home, Plus, Tag, Settings } from 'lucide-react';
 import finpulseLogo from '../assets/finpulse_logo.png';
 
 interface PriceComparisonProps {
@@ -86,10 +86,10 @@ export const PriceComparison: React.FC<PriceComparisonProps> = ({ onBack, onNavi
           <div className="flex items-center gap-3">
             <button
               onClick={onBack}
-              className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 active:scale-95 transition-all"
+              className="cyan-back-btn"
               aria-label="Go back"
             >
-              <ArrowLeft size={18} />
+              ←
             </button>
             <div>
               <h1 className="text-base font-extrabold text-white tracking-tight">

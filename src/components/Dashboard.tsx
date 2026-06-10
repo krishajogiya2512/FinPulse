@@ -11,7 +11,6 @@ import {
   ChevronRight,
   X,
 } from 'lucide-react';
-import finpulseLogo from '../assets/finpulse_logo.png';
 import type { Transaction } from '../types';
 
 type NavTab = 'home' | 'deals' | 'settings';
@@ -292,7 +291,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <span className="text-sm font-semibold text-slate-300">Total Spending</span>
             </div>
             <div className="flex items-center gap-2">
-              <img src={finpulseLogo} alt="FinPulse" className="w-7 h-7 object-contain" />
               <span className="text-sm font-extrabold text-white tracking-wide">FinPulse</span>
             </div>
           </motion.div>

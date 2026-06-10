@@ -85,3 +85,58 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #00c8c8;
 }
+
+/* ─── Light Mode Overrides ─────────────────────────────── */
+.light-mode {
+  background: #f0f4f8 !important;
+}
+
+.light-mode .card,
+.light-mode [class*="bg-slate"],
+.light-mode [class*="bg-dark"] {
+  background: #ffffff !important;
+}
+
+.light-mode p,
+.light-mode h1,
+.light-mode h2,
+.light-mode span,
+.light-mode label {
+  color: #1a1a2e !important;
+}
+
+/* Back Button styling */
+.cyan-back-btn {
+  background: #00c8c8 !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  color: white !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  border: none !important;
+  outline: none !important;
+  transition: background-color 0.2s ease, transform 0.1s ease !important;
+}
+
+.cyan-back-btn:hover {
+  background: #00a0a0 !important;
+}
+
+.cyan-back-btn:active {
+  transform: scale(0.95) !important;
+}
+
+/* Light mode backgrounds for the individual page containers */
+.light-mode #dashboard-root,
+.light-mode #smart-deals-root,
+.light-mode #price-comparison-root,
+.light-mode #spending-summary-root,
+.light-mode #settings-root {
+  background: #f0f4f8 !important;
+}
+
